@@ -2,159 +2,249 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ШТРАФПОПКА</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>⚠️ ШТРАФПОПКА ⚠️</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Baloo+2&display=swap');
-  body, html {
-    margin: 0; padding: 0;
-    overflow: hidden;
-    height: 100vh;
-    background: #000;
-    font-family: 'Baloo 2', cursive, Arial, sans-serif;
-    color: #fff;
-    user-select: none;
-  }
-  .container {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-  }
-  .shape {
-    position: absolute;
-    border-radius: 50%;
-    opacity: 0.6;
-    filter: drop-shadow(0 0 8px #fff);
-  }
-  .center-img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 160px;
-    height: 160px;
-    transform: translate(-50%, -50%);
-    border: 6px solid #fff;
-    border-radius: 50%;
-    background: #222;
-    box-shadow: 0 0 15px #ff0055;
-    cursor: grab;
-  }
-  .center-img img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: contain;
-  }
-  h1 {
-    position: absolute;
-    top: 15%;
-    width: 100%;
-    text-align: center;
-    font-size: 3.5rem;
-    color: #ff3399;
-    text-shadow:
-      0 0 6px #ff33cc,
-      0 0 12px #ff33cc,
-      0 0 18px #ff66ff;
-    user-select: none;
-  }
-  .emoji {
-    position: absolute;
-    font-size: 2.5rem;
-    opacity: 0.7;
-    pointer-events: none;
-    user-select: none;
-  }
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Moonrocks&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #111;
+  font-family: 'Rubik Moonrocks', cursive;
+  user-select: none;
+  cursor: none; /* скрываем системный курсор */
+  position: relative;
+}
+
+.background-pattern {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  background-image: url('https://static.vecteezy.com/system/resources/previews/003/542/126/non_2x/png-image-squares-background-free-vector.jpg');
+  background-repeat: repeat;
+  animation: scrollBackground 30s linear infinite;
+  z-index: 0;
+  opacity: 0.1;
+}
+
+@keyframes scrollBackground {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-50%, 0); }
+}
+
+.center-img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50vw;
+  transform: translate(-50%, -50%) rotate(-7deg);
+  z-index: 10000;
+  animation: wiggle 0.3s infinite alternate ease-in-out;
+  box-shadow: 0 0 60px #ff00ff;
+  border-radius: 8px;
+}
+.center-img img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
+.caption {
+  position: absolute;
+  bottom: -3rem;
+  left: 50%;
+  transform: translateX(-50%) rotate(-5deg);
+  color: #ff00ff;
+  font-size: 2.5rem;
+  font-family: 'Comic Neue', cursive;
+  text-shadow: 2px 2px 0 #000;
+  pointer-events: none;
+  z-index: 10001;
+}
+
+@keyframes wiggle {
+  from { transform: translate(-50%, -50%) rotate(-7deg); }
+  to { transform: translate(-50%, -50%) rotate(7deg); }
+}
+
+.social-links {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  font-family: 'Special Elite', cursive;
+  text-align: right;
+}
+
+.social-links h3 {
+  color: #ffe;
+  font-size: 16px;
+  margin-bottom: 6px;
+  text-shadow: 1px 1px 2px #000;
+}
+
+.social-links a {
+  display: block;
+  color: #ffcc00;
+  text-decoration: none;
+  font-size: 18px;
+  margin: 3px 0;
+  background: #222;
+  border: 2px dashed #ffcc00;
+  padding: 6px 10px;
+  border-radius: 4px;
+  transition: 0.2s;
+}
+
+.social-links a:hover {
+  background: #444;
+  transform: scale(1.05);
+}
+
+/* Огромный курсор WinXP */
+.cursor-glitter {
+  position: fixed;
+  width: 80px;
+  height: 80px;
+  pointer-events: none;
+  z-index: 99999;
+  background: url('https://i.imgur.com/2nCt3Sb.png') center/contain no-repeat; /* WinXP PNG курсор */
+  mix-blend-mode: screen;
+  opacity: 0.9;
+  transform: translate(-50%, -50%);
+}
+
+.sparkle {
+  position: fixed;
+  width: 12px;
+  height: 12px;
+  pointer-events: none;
+  background: radial-gradient(circle, #ffccff, #ff00ff, transparent);
+  border-radius: 50%;
+  opacity: 0.8;
+  z-index: 9999;
+  animation: sparkle-fade 0.8s linear forwards;
+}
+
+@keyframes sparkle-fade {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0.5); opacity: 0; }
+}
 </style>
 </head>
 <body>
-  <div class="container">
-    <h1>ШТРАФПОПКА!!!!</h1>
-    <div class="center-img" id="centerImg">
-      <img src="https://raw.githubusercontent.com/lilgunk/gunk-wtf/refs/heads/main/0bad96c6314bb9ed7fbe63a8a3135ed5.jpg" alt="smailik" />
-    </div>
-  </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
-  <script>
-    const container = document.querySelector('.container');
-    const centerImg = document.getElementById('centerImg');
 
-    const shapesCount = 20;
-    for(let i=0; i<shapesCount; i++) {
-      const shape = document.createElement('div');
-      shape.classList.add('shape');
-      container.appendChild(shape);
+<div class="background-pattern"></div>
 
-      const size = Math.random() * 80 + 30;
-      shape.style.width = size + 'px';
-      shape.style.height = size + 'px';
-      shape.style.background = `hsl(${Math.random()*360}, 80%, 60%)`;
-      shape.style.top = Math.random() * 100 + 'vh';
-      shape.style.left = Math.random() * 100 + 'vw';
-      shape.style.opacity = 0.2 + Math.random() * 0.5;
+<div class="center-img">
+  <img src="https://raw.githubusercontent.com/lilgunk/gunk-wtf/main/0bad96c6314bb9ed7fbe63a8a3135ed5.jpg" alt="смайлик хаоса" />
+  <div class="caption">ШТРАФПОПКА</div>
+</div>
 
-      gsap.to(shape, {
-        duration: 8 + Math.random() * 7,
-        x: '+=50',
-        yoyo: true,
-        repeat: -1,
-        ease: 'sine.inOut',
-        delay: Math.random() * 5
-      });
-      gsap.to(shape, {
-        duration: 5 + Math.random() * 6,
-        y: '+=40',
-        yoyo: true,
-        repeat: -1,
-        ease: 'sine.inOut',
-        delay: Math.random() * 5
-      });
-    }
+<div class="social-links">
+  <h3>Гунк ищется тут:</h3>
+  <a href="https://t.me/yourhandle" target="_blank">Telegram</a>
+  <a href="https://instagram.com/yourhandle" target="_blank">Instagram</a>
+</div>
 
-    gsap.to(centerImg, {
-      duration: 2,
-      scale: 1.1,
-      rotation: 5,
-      yoyo: true,
-      repeat: -1,
-      ease: 'power1.inOut'
-    });
+<div class="cursor-glitter" id="cursorGlitter"></div>
 
-    const emojis = ['🤡', '🤯', '💥', '🔥', '💀', '🤖', '👾', '👻', '💣', '🎉'];
-    const emojiCount = 15;
+<script>
+// Летающие GIF (оставляем из твоего оригинала)
+const gifUrls = [
+  'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExZnVyazlseG00NDE5c3VwNjE5MG9xY2g4NWR6azUyMDZscXprNmlxcyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/hXOede9Saf78OcbIGD/giphy.gif',
+  'https://media.giphy.com/media/VbnUQpnihPSIgIXuZv/giphy.gif',
+  'https://media.giphy.com/media/l4FGwHEUCGILzQeE0/giphy.gif',
+  'https://media.giphy.com/media/26u4b45b8KlgAB7iM/giphy.gif',
+  'https://media.giphy.com/media/xTiTnfho2vwHbm3nWw/giphy.gif',
+  'https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif',
+  'https://media.giphy.com/media/l0HlQ7LRal3bYZCd6/giphy.gif',
+  'https://media.giphy.com/media/l0MYwONBGDS7aPGOk/giphy.gif',
+  'https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif',
+  'https://media.giphy.com/media/26gslzrY1nhI1M7Mc/giphy.gif'
+];
 
-    for(let i=0; i<emojiCount; i++) {
-      const em = document.createElement('div');
-      em.classList.add('emoji');
-      em.textContent = emojis[Math.floor(Math.random()*emojis.length)];
-      container.appendChild(em);
+const body = document.body;
+const gifsCount = 10;
+const gifs = [];
 
-      resetEmoji(em);
-      animateEmoji(em);
-    }
+function random(min, max) {
+  return Math.random() * (max - min) + min;
+}
 
-    function resetEmoji(em) {
-      em.style.top = Math.random()*100 + 'vh';
-      em.style.left = Math.random()*100 + 'vw';
-      em.style.fontSize = (20 + Math.random()*40) + 'px';
-      em.style.opacity = 0.5 + Math.random()*0.5;
-    }
+for (let i = 0; i < gifsCount; i++) {
+  const gif = document.createElement('img');
+  gif.src = gifUrls[i % gifUrls.length];
+  gif.classList.add('gif-float');
+  gif.style.position = 'absolute';
+  gif.style.width = '100px';
+  gif.style.pointerEvents = 'none';
+  gif.style.userSelect = 'none';
+  gif.style.opacity = '0.8';
+  gif.style.filter = 'drop-shadow(0 0 4px #ff33cc)';
+  gif.style.zIndex = '5000';
+  gif.style.top = random(0, 90) + 'vh';
+  gif.style.left = random(0, 90) + 'vw';
+  body.appendChild(gif);
+  gifs.push({
+    el: gif,
+    x: parseFloat(gif.style.left),
+    y: parseFloat(gif.style.top),
+    vx: random(-0.2, 0.2),
+    vy: random(-0.15, 0.15),
+    angle: random(0, 360),
+    va: random(-1, 1)
+  });
+}
 
-    function animateEmoji(em) {
-      gsap.to(em, {
-        duration: 4 + Math.random()*4,
-        x: (Math.random()-0.5)*200,
-        y: (Math.random()-0.5)*200,
-        rotation: (Math.random()-0.5)*360,
-        yoyo: true,
-        repeat: -1,
-        ease: 'sine.inOut',
-        onComplete() {
-          resetEmoji(em);
-          animateEmoji(em);
-        }
-      });
-    }
-  </script>
+function animate() {
+  gifs.forEach(gif => {
+    gif.x += gif.vx;
+    gif.y += gif.vy;
+    gif.angle += gif.va;
+
+    if (gif.x < 0) gif.x = 90;
+    if (gif.x > 90) gif.x = 0;
+    if (gif.y < 0) gif.y = 90;
+    if (gif.y > 90) gif.y = 0;
+
+    gif.el.style.left = gif.x + 'vw';
+    gif.el.style.top = gif.y + 'vh';
+    gif.el.style.transform = `rotate(${gif.angle}deg)`;
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+
+// Огромный курсор и блестки
+const cursorGlitter = document.getElementById('cursorGlitter');
+document.addEventListener('mousemove', (e) => {
+  cursorGlitter.style.left = e.clientX + 'px';
+  cursorGlitter.style.top = e.clientY + 'px';
+  createSparkle(e.clientX, e.clientY);
+});
+
+function createSparkle(x, y) {
+  const sparkle = document.createElement('div');
+  sparkle.className = 'sparkle';
+  sparkle.style.left = (x + (Math.random() * 20 - 10)) + 'px';
+  sparkle.style.top = (y + (Math.random() * 20 - 10)) + 'px';
+  document.body.appendChild(sparkle);
+  setTimeout(() => sparkle.remove(), 800);
+}
+</script>
+
 </body>
 </html>
