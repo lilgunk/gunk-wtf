@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Раб стол Windows XP</title>
+<title>Окна ХэПэ</title>
 <style>
   body {
     margin: 0;
@@ -42,7 +42,7 @@
     text-align: center;
     color: white;
     font-size: 12px;
-    margin: 12px 20px; /* поменял отступы для примера */
+    margin: 10px 20px;
     cursor: pointer;
     user-select: none;
   }
@@ -135,11 +135,80 @@
     from {opacity:0; transform: scale(0.95);}
     to {opacity:1; transform: scale(1);}
   }
+
+  /* Стиль окна вируса Windows XP */
+  #virusModal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 320px;
+    background: #c0c0c0;
+    border: 2px solid #000080;
+    border-radius: 6px;
+    transform: translate(-50%, -50%);
+    font-family: Tahoma, Verdana, sans-serif;
+    color: black;
+    z-index: 9999;
+    box-shadow: 0 0 15px rgba(0,0,128,0.8);
+  }
+  #virusModalHeader {
+    background: #000080;
+    color: white;
+    padding: 6px 10px;
+    font-weight: bold;
+    font-size: 14px;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: default;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+  #virusModalHeader button {
+    background: transparent;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 18px;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    user-select: none;
+  }
+  #virusModalContent {
+    padding: 15px 20px;
+    font-size: 13px;
+    background: white;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    line-height: 1.4;
+  }
+  #virusModalContent p {
+    margin: 0 0 8px 0;
+  }
+  #virusModalContent p:first-child {
+    font-weight: bold;
+    color: #a80000;
+    margin-bottom: 10px;
+  }
+
+  /* Оверлей блокировки */
+  #overlayBlocker {
+    position: fixed;
+    top:0; left:0; right:0; bottom:0;
+    background: rgba(0,0,0,0.15);
+    z-index: 9998;
+  }
 </style>
 </head>
 <body>
 
-<!-- Иконки в нужном порядке -->
+<!-- Иконки (порядок: Мой комп, Корзина, Telegram, Instagram) -->
 <div class="desktop-icon" ondblclick="openWindow('Мой компьютер')">
   <img src="XPIcon.webp" alt="Мой компьютер" />
   <div>Мой комп</div>
@@ -180,8 +249,21 @@
   <div class="window-content" id="windowContent">Содержимое окна</div>
 </div>
 
-<!-- Аудио звук клика -->
-<audio id="clickSound" src="click-tap.mp3"></audio>
+<!-- Окно вируса -->
+<div id="virusModal">
+  <div id="virusModalHeader">
+    компьютер Гунка!!!
+    <button onclick="closeVirusModal()" title="Закрыть">×</button>
+  </div>
+  <div id="virusModalContent">
+    <p>НЕ ТРОГАТЬ!</p>
+    <p>Система заражена вирусом!</p>
+    <p>Нужно срочно отключить компьютер!</p>
+  </div>
+</div>
+
+<!-- Оверлей для блокировки кликов -->
+<div id="overlayBlocker"></div>
 
 <script>
   const win = document.getElementById('windowBox');
@@ -190,34 +272,42 @@
   const content = document.getElementById('windowContent');
   const startMenu = document.getElementById('startMenu');
 
+  // Звук клика при любом клике на странице
   function playClickSound() {
-    const sound = document.getElementById('clickSound');
+    const sound = new Audio('click-tap.mp3');
     sound.currentTime = 0;
     sound.play().catch(() => {});
   }
   document.addEventListener('click', playClickSound);
 
+  // Переключение меню Пуск
   function toggleStartMenu() {
+    if (virusModalVisible()) return; // блокируем пока вирус окно открыто
     startMenu.style.display = startMenu.style.display === 'flex' ? 'none' : 'flex';
   }
 
+  // Открыть окно с названием
   function openWindow(titleText) {
+    if (virusModalVisible()) return; // блокируем пока вирус окно открыто
     title.textContent = titleText;
     content.textContent = `Вы открыли "${titleText}".`;
     win.style.display = 'flex';
     startMenu.style.display = 'none';
   }
 
+  // Закрыть окно
   function closeWindow(event) {
     event.stopPropagation();
     win.style.display = 'none';
   }
 
+  // Свернуть окно (просто скрыть)
   function minimizeWindow(event) {
     event.stopPropagation();
     win.style.display = 'none';
   }
 
+  // Перетаскивание окна
   let offsetX = 0;
   let offsetY = 0;
   let isDragging = false;
@@ -241,6 +331,7 @@
     let left = e.clientX - offsetX;
     let top = e.clientY - offsetY;
 
+    // Ограничения окна в пределах видимой области
     const maxLeft = window.innerWidth - win.offsetWidth;
     const maxTop = window.innerHeight - win.offsetHeight;
 
@@ -253,31 +344,59 @@
     win.style.top = top + 'px';
   });
 
+  // --- Обработка кликов по иконкам ---
   function isMobile() {
     return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
   }
 
-  function attachIconHandlers() {
-    const icons = document.querySelectorAll('.desktop-icon');
-
-    icons.forEach(icon => {
-      const url = icon.getAttribute('data-url');
-      if (!url) return;
-
-      if (isMobile()) {
-        icon.addEventListener('click', () => {
-          window.open(url, '_blank');
-        });
-      } else {
-        icon.addEventListener('dblclick', () => {
-          window.open(url, '_blank');
-        });
+  document.querySelectorAll('.desktop-icon').forEach(icon => {
+    icon.addEventListener('click', e => {
+      if (virusModalVisible()) return; // блокируем
+      if (icon.dataset.url) {
+        window.open(icon.dataset.url, '_blank');
       }
     });
+    icon.addEventListener('dblclick', e => {
+      if (virusModalVisible()) return;
+      if (!icon.dataset.url) {
+        const name = icon.querySelector('div').textContent;
+        openWindow(name);
+      }
+    });
+  });
+
+  // --- Вирусное окно ---
+  const virusModal = document.getElementById('virusModal');
+  const overlayBlocker = document.getElementById('overlayBlocker');
+
+  function virusModalVisible() {
+    return virusModal.style.display !== 'none';
   }
 
-  document.addEventListener('DOMContentLoaded', attachIconHandlers);
-</script>
+  function closeVirusModal() {
+    virusModal.style.display = 'none';
+    overlayBlocker.style.display = 'none';
+  }
 
+  // Изначально показываем вирусное окно и блокируем взаимодействия
+  virusModal.style.display = 'block';
+  overlayBlocker.style.display = 'block';
+
+  // Блокируем все действия кроме закрытия вирусного окна
+  overlayBlocker.addEventListener('click', e => {
+    e.stopPropagation();
+    // Ничего не делать - блокируем
+  });
+
+  // Запрет на нажатия клавиш пока вирус окно открыто
+  window.addEventListener('keydown', e => {
+    if (virusModalVisible()) e.preventDefault();
+  });
+
+  // Убираем меню пуск если вирус окно открыто
+  if (virusModalVisible()) {
+    startMenu.style.display = 'none';
+  }
+</script>
 </body>
 </html>
