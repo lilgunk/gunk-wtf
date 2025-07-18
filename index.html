@@ -1,37 +1,306 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>ДЕНЕГ НЕТ!</title>
-    <style>
-        body {
-            background-color: #111;
-            color: #fff;
-            font-family: sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            text-align: center;
-        }
-        h1 {
-            font-size: 4em;
-            color: red;
-        }
-        p {
-            font-size: 2em;
-            color: #ccc;
-        }
-        img {
-            max-width: 300px;
-            margin-top: 20px;
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Раб стол Windows XP</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: url('http://i.imgur.com/VvNhMb0.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: Tahoma, sans-serif;
+    overflow: hidden;
+  }
+  .taskbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: linear-gradient(to top, #0c2d59, #1c4c93);
+    display: flex;
+    align-items: center;
+    color: white;
+    z-index: 10;
+  }
+  .start-button {
+    background: url('https://www.rw-designer.com/icon-image/18835-256x256x32.png') no-repeat 5px center, #1c4c93;
+    background-size: 20px 20px;
+    color: white;
+    border: none;
+    padding: 5px 10px 5px 30px;
+    cursor: pointer;
+    margin-left: 5px;
+    border-radius: 3px;
+    font-size: 14px;
+  }
+  /* Контейнер для иконок вертикально */
+  #desktopIcons {
+    position: fixed;
+    top: 0px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 5;
+  }
+  .desktop-icon {
+    width: 60px;
+    text-align: center;
+    color: white;
+    font-size: 12px;
+    margin: 12px 0;
+    cursor: pointer;
+    user-select: none;
+  }
+  .desktop-icon img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .start-menu {
+    position: absolute;
+    bottom: 40px;
+    left: 5px;
+    width: 200px;
+    background: #1c4c93;
+    color: white;
+    padding: 10px;
+    border: 2px solid #0c2d59;
+    display: none;
+    flex-direction: column;
+    font-size: 14px;
+    border-radius: 4px;
+  }
+  .start-menu div {
+    padding: 5px;
+    cursor: pointer;
+  }
+  .start-menu div:hover {
+    background: rgba(255,255,255,0.2);
+  }
+  .window {
+    position: fixed;
+    top: 50px;
+    left: 50px;
+    width: 300px;
+    height: 200px;
+    background: #c0c0c0;
+    border: 2px solid #000080;
+    border-radius: 4px;
+    display: none;
+    flex-direction: column;
+    z-index: 20;
+    animation: fadeIn 0.3s ease;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  }
+  .window-header {
+    background: #000080;
+    color: white;
+    padding: 5px 10px;
+    cursor: move;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+  }
+  .window-title {
+    flex-grow: 1;
+  }
+  .window-controls {
+    display: flex;
+    gap: 5px;
+  }
+  .window-controls button {
+    width: 20px;
+    height: 20px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    background: #800000; /* красный по умолчанию для крестика */
+    color: white;
+    font-weight: bold;
+    line-height: 20px;
+    text-align: center;
+    padding: 0;
+  }
+  .window-controls button.minimize {
+    background: #daa520; /* золотистый для сворачивания */
+  }
+  .window-controls button:hover.minimize {
+    background: #ffd700;
+  }
+  .window-controls button:hover.close {
+    background: #ff0000;
+  }
+  .window-content {
+    flex: 1;
+    padding: 10px;
+    background: white;
+    overflow: auto;
+  }
+  @keyframes fadeIn {
+    from {opacity:0; transform: scale(0.95);}
+    to {opacity:1; transform: scale(1);}
+  }
+</style>
 </head>
 <body>
-    <h1>ДЕНЕГ НЕТ!</h1>
-    <p>*и не будет</p>
-    <img src="https://c0.klipartz.com/pngpicture/905/798/gratis-png-pueblo-judio-judaismo-pol-bill-maher-judaismo-thumbnail.png" alt="">
+
+<!-- Контейнер с ярлыками в нужном порядке -->
+<div id="desktopIcons">
+  <div class="desktop-icon" ondblclick="openWindow('Мой компьютер')">
+    <img src="https://static.wikia.nocookie.net/the-microsoft-windows-xp/images/f/f9/XPIcon.png/revision/latest?cb=20191129153941" alt="Мой компьютер" />
+    <div>Мой комп</div>
+  </div>
+
+  <div class="desktop-icon" ondblclick="openWindow('Корзина')">
+    <img src="https://static.wikia.nocookie.net/logopedia/images/2/2a/Recycle_Bin_Windows_XP_full.PNG/revision/latest/scale-to-width-down/1000?cb=20220713171727" alt="Корзина" />
+    <div>Корзина</div>
+  </div>
+
+  <div class="desktop-icon" data-url="https://t.me/onthagunk">
+    <img src="https://as2.ftcdn.net/v2/jpg/13/11/56/55/1000_F_1311565507_VIwYurf3n3cgNNYgTHEO2OPrOJGFPkCo.webp" alt="Telegram" />
+    <div>Telegram</div>
+  </div>
+
+  <div class="desktop-icon" data-url="https://www.instagram.com/lil.gunk/">
+    <img src="https://file.aiquickdraw.com/imgcompressed/img/compressed_57141d897cac688b70a7d26acccee922.webp" alt="Instagram" />
+    <div>Instagram</div>
+  </div>
+</div>
+
+<div class="taskbar">
+  <button class="start-button" onclick="toggleStartMenu()">Пуск</button>
+</div>
+
+<div class="start-menu" id="startMenu">
+  <div onclick="openWindow('Блокнот')">Блокнот</div>
+  <div onclick="openWindow('Проводник')">Проводник</div>
+</div>
+
+<div class="window" id="windowBox">
+  <div class="window-header" id="windowHeader">
+    <div class="window-title" id="windowTitle">Окно</div>
+    <div class="window-controls">
+      <button class="minimize" title="Свернуть" onclick="minimizeWindow(event)">–</button>
+      <button class="close" title="Закрыть" onclick="closeWindow(event)">×</button>
+    </div>
+  </div>
+  <div class="window-content" id="windowContent">Содержимое окна</div>
+</div>
+
+<!-- Аудио звук клика, файл должен лежать рядом с index.html -->
+<audio id="clickSound" src="click-tap.mp3"></audio>
+
+<script>
+  const win = document.getElementById('windowBox');
+  const header = document.getElementById('windowHeader');
+  const title = document.getElementById('windowTitle');
+  const content = document.getElementById('windowContent');
+  const startMenu = document.getElementById('startMenu');
+
+  // Звук клика при любом клике на странице
+  function playClickSound() {
+    const sound = document.getElementById('clickSound');
+    sound.currentTime = 0;
+    sound.play().catch(() => {});
+  }
+  document.addEventListener('click', playClickSound);
+
+  // Переключение меню Пуск
+  function toggleStartMenu() {
+    startMenu.style.display = startMenu.style.display === 'flex' ? 'none' : 'flex';
+  }
+
+  // Открыть окно с названием
+  function openWindow(titleText) {
+    title.textContent = titleText;
+    content.textContent = `Вы открыли "${titleText}".`;
+    win.style.display = 'flex';
+    startMenu.style.display = 'none';
+  }
+
+  // Закрыть окно
+  function closeWindow(event) {
+    event.stopPropagation();
+    win.style.display = 'none';
+  }
+
+  // Свернуть окно (просто скрыть)
+  function minimizeWindow(event) {
+    event.stopPropagation();
+    win.style.display = 'none';
+  }
+
+  // Перетаскивание окна
+  let offsetX = 0;
+  let offsetY = 0;
+  let isDragging = false;
+
+  header.style.cursor = 'move';
+
+  header.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    offsetX = e.clientX - win.getBoundingClientRect().left;
+    offsetY = e.clientY - win.getBoundingClientRect().top;
+    document.body.style.userSelect = 'none';
+  });
+
+  document.addEventListener('mouseup', () => {
+    isDragging = false;
+    document.body.style.userSelect = '';
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    let left = e.clientX - offsetX;
+    let top = e.clientY - offsetY;
+
+    // Ограничения окна в пределах видимой области
+    const maxLeft = window.innerWidth - win.offsetWidth;
+    const maxTop = window.innerHeight - win.offsetHeight;
+
+    if (left < 0) left = 0;
+    if (top < 0) top = 0;
+    if (left > maxLeft) left = maxLeft;
+    if (top > maxTop) top = maxTop;
+
+    win.style.left = left + 'px';
+    win.style.top = top + 'px';
+  });
+
+  // --- Новый скрипт для открытия ссылок на иконках ---
+  function isMobile() {
+    return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  }
+
+  function attachIconHandlers() {
+    const icons = document.querySelectorAll('.desktop-icon');
+
+    icons.forEach(icon => {
+      const url = icon.getAttribute('data-url');
+      if (!url) return;
+
+      if (isMobile()) {
+        // На мобильных - открываем по одиночному тапу
+        icon.addEventListener('click', () => {
+          window.open(url, '_blank');
+        });
+      } else {
+        // На ПК - открываем по двойному клику
+        icon.addEventListener('dblclick', () => {
+          window.open(url, '_blank');
+        });
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', attachIconHandlers);
+</script>
+
 </body>
 </html>
