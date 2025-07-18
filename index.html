@@ -3,8 +3,21 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Окна ХэПэ</title>
+<title>окна хЭпИ</title>
 <style>
+  #randomImageShortcut img {
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  user-select: none;
+}
+#randomImageShortcut div {
+  color: white;
+  font-size: 12px;
+  text-align: center;
+  user-select: none;
+}
+
   body {
     margin: 0;
     padding: 0;
@@ -39,7 +52,7 @@
   }
   .desktop-icon {
     width: 60px;
-    text-align: center;
+    text-align: c enter;
     color: white;
     font-size: 12px;
     margin: 10px 20px;
@@ -204,6 +217,13 @@
     background: rgba(0,0,0,0.15);
     z-index: 9998;
   }
+  .window-content img {
+  user-select: none;
+  pointer-events: none;
+}
+
+
+  
 </style>
 </head>
 <body>
@@ -219,15 +239,28 @@
   <div>Корзина</div>
 </div>
 
-<div class="desktop-icon" data-url="https://t.me/onthagunk">
+<div class="desktop-icon" data-url="https://t.me/YOUR_TELEGRAM_USERNAME">
   <img src="https://as2.ftcdn.net/v2/jpg/13/11/56/55/1000_F_1311565507_VIwYurf3n3cgNNYgTHEO2OPrOJGFPkCo.webp" alt="Telegram" />
   <div>Telegram</div>
 </div>
 
-<div class="desktop-icon" data-url="https://www.instagram.com/lil.gunk/">
+<div class="desktop-icon" data-url="https://instagram.com/YOUR_INSTAGRAM_USERNAME">
   <img src="https://file.aiquickdraw.com/imgcompressed/img/compressed_57141d897cac688b70a7d26acccee922.webp" alt="Instagram" />
   <div>Instagram</div>
 </div>
+
+<div class="desktop-icon" ondblclick="openWindow('Казино')">
+  <img src="casino.webp" alt="Казино" />
+  <div>Казино</div>
+</div>
+
+<!-- Рандомный ярлык картинки -->
+<div id="randomImageShortcut" class="desktop-icon" style="position: fixed; cursor: pointer;">
+  <img src="image.jpg" alt="Рандомная картинка" />
+  <div>не нажымать!!</div>
+</div>
+
+
 
 <div class="taskbar">
   <button class="start-button" onclick="toggleStartMenu()">Пуск</button>
@@ -262,6 +295,27 @@
   </div>
 </div>
 
+<!-- Окно Казино XP -->
+<!-- Окно Казино XP -->
+<div class="window" id="casinoWindow">
+  <div class="window-header" id="casinoWindowHeader">
+    <div class="window-title">Казино XP</div>
+    <div class="window-controls">
+      <button class="minimize" title="Свернуть" onclick="minimizeCasino(event)">–</button>
+      <button class="close" title="Закрыть" onclick="closeCasino(event)">×</button>
+    </div>
+  </div>
+  <div class="window-content" style="text-align:center;">
+    <div id="slots" style="font-size:48px; margin:10px;">🍒 🍋 🍊</div>
+    <button onclick="playCasino()">Крутить 🎰</button>
+    <p id="casinoResult" style="margin-top:10px;">Попробуйте удачу!</p>
+  </div>
+</div>
+
+
+
+
+
 <!-- Оверлей для блокировки кликов -->
 <div id="overlayBlocker"></div>
 
@@ -271,6 +325,7 @@
   const title = document.getElementById('windowTitle');
   const content = document.getElementById('windowContent');
   const startMenu = document.getElementById('startMenu');
+  
 
   // Звук клика при любом клике на странице
   function playClickSound() {
@@ -397,6 +452,139 @@
   if (virusModalVisible()) {
     startMenu.style.display = 'none';
   }
+
+  // --- Казино XP ---
+const casinoWindow = document.getElementById('casinoWindow');
+const casinoResult = document.getElementById('casinoResult');
+
+// Открытие казино по двойному клику
+document.querySelectorAll('.desktop-icon').forEach(icon => {
+  icon.addEventListener('dblclick', e => {
+    if (virusModalVisible()) return;
+    const name = icon.querySelector('div').textContent.trim();
+    if (name === 'Казино') {
+      openCasino();
+    }
+  });
+});
+
+function openCasino() {
+  casinoWindow.style.display = 'flex';
+}
+
+function closeCasino(event) {
+  event.stopPropagation();
+  casinoWindow.style.display = 'none';
+}
+
+function minimizeCasino(event) {
+  event.stopPropagation();
+  casinoWindow.style.display = 'none';
+}
+
+function playCasino() {
+  const outcomes = ['Вы выиграли 1000 XP!', 'Увы, вы проиграли!', 'Вы выиграли 500 XP!', 'Ничья, попробуйте снова!'];
+  const result = outcomes[Math.floor(Math.random() * outcomes.length)];
+  casinoResult.textContent = result;
+
+  // Можно добавить звук выигрыша/проигрыша:
+   let sound = new Audio(result.includes('выиграли') ? 'win.mp3' : 'lose.mp3');
+   sound.play().catch(() => {});
+}
+const randomShortcut = document.getElementById('randomImageShortcut');
+
+// Задаём рандомную позицию при загрузке
+function setRandomPosition(element, margin = 100) {
+  const maxX = window.innerWidth - element.offsetWidth - margin;
+  const maxY = window.innerHeight - element.offsetHeight - margin;
+  const randX = Math.floor(Math.random() * maxX);
+  const randY = Math.floor(Math.random() * maxY);
+  element.style.left = randX + 'px';
+  element.style.top = randY + 'px';
+}
+setRandomPosition(randomShortcut);
+
+// Создаем окно для картинки
+const imgWindow = document.createElement('div');
+imgWindow.className = 'window';
+imgWindow.style.display = 'none';
+imgWindow.style.width = '400px';
+imgWindow.style.height = '300px';
+imgWindow.style.top = '100px';
+imgWindow.style.left = '100px';
+imgWindow.style.zIndex = '30';
+
+imgWindow.innerHTML = `
+  <div class="window-header">
+    <div class="window-title">Фото</div>
+    <div class="window-controls">
+      <button class="minimize" title="Свернуть">–</button>
+      <button class="close" title="Закрыть">×</button>
+    </div>
+  </div>
+  <div class="window-content" style="display:flex; justify-content:center; align-items:center; background:#fff;">
+    <img src="${randomShortcut.querySelector('img').src}" alt="Фото" style="max-width: 95%; max-height: 95%; border-radius: 6px;" />
+  </div>
+`;
+document.body.appendChild(imgWindow);
+
+// Открываем окно по двойному клику
+randomShortcut.addEventListener('dblclick', () => {
+  imgWindow.style.display = 'flex';
+});
+
+// Кнопки управления окном
+const imgWinHeader = imgWindow.querySelector('.window-header');
+const minimizeBtn = imgWindow.querySelector('button.minimize');
+const closeBtn = imgWindow.querySelector('button.close');
+
+minimizeBtn.onclick = () => {
+  imgWindow.style.display = 'none';
+};
+
+closeBtn.onclick = () => {
+  imgWindow.style.display = 'none';
+};
+
+// Перетаскивание окна
+let dragActive = false;
+let dragOffsetX = 0;
+let dragOffsetY = 0;
+
+imgWinHeader.style.cursor = 'move';
+
+imgWinHeader.addEventListener('mousedown', e => {
+  dragActive = true;
+  const rect = imgWindow.getBoundingClientRect();
+  dragOffsetX = e.clientX - rect.left;
+  dragOffsetY = e.clientY - rect.top;
+  document.body.style.userSelect = 'none';
+});
+
+document.addEventListener('mouseup', () => {
+  dragActive = false;
+  document.body.style.userSelect = '';
+});
+
+document.addEventListener('mousemove', e => {
+  if (!dragActive) return;
+
+  let left = e.clientX - dragOffsetX;
+  let top = e.clientY - dragOffsetY;
+
+  const maxLeft = window.innerWidth - imgWindow.offsetWidth;
+  const maxTop = window.innerHeight - imgWindow.offsetHeight;
+
+  if (left < 0) left = 0;
+  if (top < 0) top = 0;
+  if (left > maxLeft) left = maxLeft;
+  if (top > maxTop) top = maxTop;
+
+  imgWindow.style.left = left + 'px';
+  imgWindow.style.top = top + 'px';
+});
+
+
 </script>
 </body>
 </html>
