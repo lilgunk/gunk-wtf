@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Окна ИксП</title>
+<title>Раб стол Windows XP</title>
 <style>
   body {
     margin: 0;
@@ -37,22 +37,12 @@
     border-radius: 3px;
     font-size: 14px;
   }
-  /* Контейнер для иконок вертикально */
-  #desktopIcons {
-    position: fixed;
-    top: 0px;
-    left: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    z-index: 5;
-  }
   .desktop-icon {
     width: 60px;
     text-align: center;
     color: white;
     font-size: 12px;
-    margin: 12px 0;
+    margin: 12px 20px; /* поменял отступы для примера */
     cursor: pointer;
     user-select: none;
   }
@@ -60,7 +50,6 @@
     width: 48px;
     height: 48px;
   }
-
   .start-menu {
     position: absolute;
     bottom: 40px;
@@ -120,7 +109,7 @@
     border: none;
     border-radius: 2px;
     cursor: pointer;
-    background: #800000; /* красный по умолчанию для крестика */
+    background: #800000;
     color: white;
     font-weight: bold;
     line-height: 20px;
@@ -128,7 +117,7 @@
     padding: 0;
   }
   .window-controls button.minimize {
-    background: #daa520; /* золотистый для сворачивания */
+    background: #daa520;
   }
   .window-controls button:hover.minimize {
     background: #ffd700;
@@ -150,27 +139,25 @@
 </head>
 <body>
 
-<!-- Контейнер с ярлыками в нужном порядке -->
-<div id="desktopIcons">
-  <div class="desktop-icon" ondblclick="openWindow('Мой компьютер')">
-    <img src="https://static.wikia.nocookie.net/the-microsoft-windows-xp/images/f/f9/XPIcon.png/revision/latest?cb=20191129153941" alt="Мой компьютер" />
-    <div>Мой комп</div>
-  </div>
+<!-- Иконки в нужном порядке -->
+<div class="desktop-icon" ondblclick="openWindow('Мой компьютер')">
+  <img src="XPIcon.webp" alt="Мой компьютер" />
+  <div>Мой комп</div>
+</div>
 
-  <div class="desktop-icon" ondblclick="openWindow('Корзина')">
-    <img src="https://static.wikia.nocookie.net/logopedia/images/2/2a/Recycle_Bin_Windows_XP_full.PNG/revision/latest/scale-to-width-down/1000?cb=20220713171727" alt="Корзина" />
-    <div>Корзина</div>
-  </div>
+<div class="desktop-icon" ondblclick="openWindow('Корзина')">
+  <img src="Korzina.webp" alt="Корзина" />
+  <div>Корзина</div>
+</div>
 
-  <div class="desktop-icon" data-url="https://t.me/onthagunk">
-    <img src="https://as2.ftcdn.net/v2/jpg/13/11/56/55/1000_F_1311565507_VIwYurf3n3cgNNYgTHEO2OPrOJGFPkCo.webp" alt="Telegram" />
-    <div>Telegram</div>
-  </div>
+<div class="desktop-icon" data-url="https://t.me/YOUR_TELEGRAM_USERNAME">
+  <img src="https://as2.ftcdn.net/v2/jpg/13/11/56/55/1000_F_1311565507_VIwYurf3n3cgNNYgTHEO2OPrOJGFPkCo.webp" alt="Telegram" />
+  <div>Telegram</div>
+</div>
 
-  <div class="desktop-icon" data-url="https://www.instagram.com/lil.gunk/">
-    <img src="https://file.aiquickdraw.com/imgcompressed/img/compressed_57141d897cac688b70a7d26acccee922.webp" alt="Instagram" />
-    <div>Instagram</div>
-  </div>
+<div class="desktop-icon" data-url="https://instagram.com/YOUR_INSTAGRAM_USERNAME">
+  <img src="https://file.aiquickdraw.com/imgcompressed/img/compressed_57141d897cac688b70a7d26acccee922.webp" alt="Instagram" />
+  <div>Instagram</div>
 </div>
 
 <div class="taskbar">
@@ -193,7 +180,7 @@
   <div class="window-content" id="windowContent">Содержимое окна</div>
 </div>
 
-<!-- Аудио звук клика, файл должен лежать рядом с index.html -->
+<!-- Аудио звук клика -->
 <audio id="clickSound" src="click-tap.mp3"></audio>
 
 <script>
@@ -203,7 +190,6 @@
   const content = document.getElementById('windowContent');
   const startMenu = document.getElementById('startMenu');
 
-  // Звук клика при любом клике на странице
   function playClickSound() {
     const sound = document.getElementById('clickSound');
     sound.currentTime = 0;
@@ -211,12 +197,10 @@
   }
   document.addEventListener('click', playClickSound);
 
-  // Переключение меню Пуск
   function toggleStartMenu() {
     startMenu.style.display = startMenu.style.display === 'flex' ? 'none' : 'flex';
   }
 
-  // Открыть окно с названием
   function openWindow(titleText) {
     title.textContent = titleText;
     content.textContent = `Вы открыли "${titleText}".`;
@@ -224,19 +208,16 @@
     startMenu.style.display = 'none';
   }
 
-  // Закрыть окно
   function closeWindow(event) {
     event.stopPropagation();
     win.style.display = 'none';
   }
 
-  // Свернуть окно (просто скрыть)
   function minimizeWindow(event) {
     event.stopPropagation();
     win.style.display = 'none';
   }
 
-  // Перетаскивание окна
   let offsetX = 0;
   let offsetY = 0;
   let isDragging = false;
@@ -260,7 +241,6 @@
     let left = e.clientX - offsetX;
     let top = e.clientY - offsetY;
 
-    // Ограничения окна в пределах видимой области
     const maxLeft = window.innerWidth - win.offsetWidth;
     const maxTop = window.innerHeight - win.offsetHeight;
 
@@ -273,7 +253,6 @@
     win.style.top = top + 'px';
   });
 
-  // --- Новый скрипт для открытия ссылок на иконках ---
   function isMobile() {
     return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
   }
@@ -286,12 +265,10 @@
       if (!url) return;
 
       if (isMobile()) {
-        // На мобильных - открываем по одиночному тапу
         icon.addEventListener('click', () => {
           window.open(url, '_blank');
         });
       } else {
-        // На ПК - открываем по двойному клику
         icon.addEventListener('dblclick', () => {
           window.open(url, '_blank');
         });
