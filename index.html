@@ -1,250 +1,37 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>⚠️ ШТРАФПОПКА ⚠️</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Rubik+Moonrocks&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html, body {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background-color: #111;
-  font-family: 'Rubik Moonrocks', cursive;
-  user-select: none;
-  cursor: none; /* скрываем системный курсор */
-  position: relative;
-}
-
-.background-pattern {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 200%;
-  height: 200%;
-  background-image: url('https://static.vecteezy.com/system/resources/previews/003/542/126/non_2x/png-image-squares-background-free-vector.jpg');
-  background-repeat: repeat;
-  animation: scrollBackground 30s linear infinite;
-  z-index: 0;
-  opacity: 0.1;
-}
-
-@keyframes scrollBackground {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(-50%, 0); }
-}
-
-.center-img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 50vw;
-  transform: translate(-50%, -50%) rotate(-7deg);
-  z-index: 10000;
-  animation: wiggle 0.3s infinite alternate ease-in-out;
-  box-shadow: 0 0 60px #ff00ff;
-  border-radius: 8px;
-}
-.center-img img {
-  width: 100%;
-  height: auto;
-  display: block;
-  border-radius: 8px;
-}
-
-.caption {
-  position: absolute;
-  bottom: -3rem;
-  left: 50%;
-  transform: translateX(-50%) rotate(-5deg);
-  color: #ff00ff;
-  font-size: 2.5rem;
-  font-family: 'Comic Neue', cursive;
-  text-shadow: 2px 2px 0 #000;
-  pointer-events: none;
-  z-index: 10001;
-}
-
-@keyframes wiggle {
-  from { transform: translate(-50%, -50%) rotate(-7deg); }
-  to { transform: translate(-50%, -50%) rotate(7deg); }
-}
-
-.social-links {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 9999;
-  font-family: 'Special Elite', cursive;
-  text-align: right;
-}
-
-.social-links h3 {
-  color: #ffe;
-  font-size: 16px;
-  margin-bottom: 6px;
-  text-shadow: 1px 1px 2px #000;
-}
-
-.social-links a {
-  display: block;
-  color: #ffcc00;
-  text-decoration: none;
-  font-size: 18px;
-  margin: 3px 0;
-  background: #222;
-  border: 2px dashed #ffcc00;
-  padding: 6px 10px;
-  border-radius: 4px;
-  transition: 0.2s;
-}
-
-.social-links a:hover {
-  background: #444;
-  transform: scale(1.05);
-}
-
-/* Огромный курсор WinXP */
-.cursor-glitter {
-  position: fixed;
-  width: 80px;
-  height: 80px;
-  pointer-events: none;
-  z-index: 99999;
-  background: url('https://i.imgur.com/2nCt3Sb.png') center/contain no-repeat; /* WinXP PNG курсор */
-  mix-blend-mode: screen;
-  opacity: 0.9;
-  transform: translate(-50%, -50%);
-}
-
-.sparkle {
-  position: fixed;
-  width: 12px;
-  height: 12px;
-  pointer-events: none;
-  background: radial-gradient(circle, #ffccff, #ff00ff, transparent);
-  border-radius: 50%;
-  opacity: 0.8;
-  z-index: 9999;
-  animation: sparkle-fade 0.8s linear forwards;
-}
-
-@keyframes sparkle-fade {
-  0% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(0.5); opacity: 0; }
-}
-</style>
+    <meta charset="UTF-8">
+    <title>ДЕНЕГ НЕТ!</title>
+    <style>
+        body {
+            background-color: #111;
+            color: #fff;
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+        h1 {
+            font-size: 4em;
+            color: red;
+        }
+        p {
+            font-size: 2em;
+            color: #ccc;
+        }
+        img {
+            max-width: 300px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-
-<div class="background-pattern"></div>
-
-<div class="center-img">
-  <img src="https://raw.githubusercontent.com/lilgunk/gunk-wtf/main/0bad96c6314bb9ed7fbe63a8a3135ed5.jpg" alt="смайлик хаоса" />
-  <div class="caption">ШТРАФПОПКА</div>
-</div>
-
-<div class="social-links">
-  <h3>Гунк ищется тут:</h3>
-  <a href="https://t.me/onthagunk" target="_blank">Telegram</a>
-  <a href="https://www.instagram.com/lil.gunk/" target="_blank">Instagram</a>
-</div>
-
-<div class="cursor-glitter" id="cursorGlitter"></div>
-
-<script>
-// Летающие GIF (оставляем из твоего оригинала)
-const gifUrls = [
-  'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExZnVyazlseG00NDE5c3VwNjE5MG9xY2g4NWR6azUyMDZscXprNmlxcyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/hXOede9Saf78OcbIGD/giphy.gif',
-  'https://media.giphy.com/media/VbnUQpnihPSIgIXuZv/giphy.gif',
-  'https://media.giphy.com/media/l4FGwHEUCGILzQeE0/giphy.gif',
-  'https://media.giphy.com/media/26u4b45b8KlgAB7iM/giphy.gif',
-  'https://media.giphy.com/media/xTiTnfho2vwHbm3nWw/giphy.gif',
-  'https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif',
-  'https://media.giphy.com/media/l0HlQ7LRal3bYZCd6/giphy.gif',
-  'https://media.giphy.com/media/l0MYwONBGDS7aPGOk/giphy.gif',
-  'https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif',
-  'https://media.giphy.com/media/26gslzrY1nhI1M7Mc/giphy.gif'
-];
-
-const body = document.body;
-const gifsCount = 10;
-const gifs = [];
-
-function random(min, max) {
-  return Math.random() * (max - min) + min;
-}
-
-for (let i = 0; i < gifsCount; i++) {
-  const gif = document.createElement('img');
-  gif.src = gifUrls[i % gifUrls.length];
-  gif.classList.add('gif-float');
-  gif.style.position = 'absolute';
-  gif.style.width = '100px';
-  gif.style.pointerEvents = 'none';
-  gif.style.userSelect = 'none';
-  gif.style.opacity = '0.8';
-  gif.style.filter = 'drop-shadow(0 0 4px #ff33cc)';
-  gif.style.zIndex = '5000';
-  gif.style.top = random(0, 90) + 'vh';
-  gif.style.left = random(0, 90) + 'vw';
-  body.appendChild(gif);
-  gifs.push({
-    el: gif,
-    x: parseFloat(gif.style.left),
-    y: parseFloat(gif.style.top),
-    vx: random(-0.2, 0.2),
-    vy: random(-0.15, 0.15),
-    angle: random(0, 360),
-    va: random(-1, 1)
-  });
-}
-
-function animate() {
-  gifs.forEach(gif => {
-    gif.x += gif.vx;
-    gif.y += gif.vy;
-    gif.angle += gif.va;
-
-    if (gif.x < 0) gif.x = 90;
-    if (gif.x > 90) gif.x = 0;
-    if (gif.y < 0) gif.y = 90;
-    if (gif.y > 90) gif.y = 0;
-
-    gif.el.style.left = gif.x + 'vw';
-    gif.el.style.top = gif.y + 'vh';
-    gif.el.style.transform = `rotate(${gif.angle}deg)`;
-  });
-  requestAnimationFrame(animate);
-}
-animate();
-
-// Огромный курсор и блестки
-const cursorGlitter = document.getElementById('cursorGlitter');
-document.addEventListener('mousemove', (e) => {
-  cursorGlitter.style.left = e.clientX + 'px';
-  cursorGlitter.style.top = e.clientY + 'px';
-  createSparkle(e.clientX, e.clientY);
-});
-
-function createSparkle(x, y) {
-  const sparkle = document.createElement('div');
-  sparkle.className = 'sparkle';
-  sparkle.style.left = (x + (Math.random() * 20 - 10)) + 'px';
-  sparkle.style.top = (y + (Math.random() * 20 - 10)) + 'px';
-  document.body.appendChild(sparkle);
-  setTimeout(() => sparkle.remove(), 800);
-}
-</script>
-
+    <h1>ДЕНЕГ НЕТ!</h1>
+    <p>*и не будет</p>
+    <img src="https://c0.klipartz.com/pngpicture/905/798/gratis-png-pueblo-judio-judaismo-pol-bill-maher-judaismo-thumbnail.png" alt="">
 </body>
 </html>
